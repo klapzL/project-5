@@ -1,0 +1,16 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.user-ctrl-btn {
+    margin-right: 10px;
+}
+.user-name {
+    margin-right: 10px;
+    background-color:   #eaeaea  ;
+    border: solid  #eaeaea  2px;
+}
+.login-btn {
+    margin-top: 10px;
+}

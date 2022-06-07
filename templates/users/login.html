@@ -7,13 +7,21 @@
 
 {% block content %}
 <h3>
-    Вход
+    Log in
 </h3>    
 <form action="" method="POST">
-    {% csrf_token %} {{form.as_p}}
-    <button class="btn btn-primary" type="submit">
-        Войти
+    {% csrf_token %}
+    {% if form.errors %}
+        <p>{{form.errors}}</p>
+    {% endif %}
+    <label class="form-label">username</label>
+    {% render_field form.username class="form-control form-field" placeholder="Enter the username"%}
+
+    <label class="form-label">Password</label>
+    {% render_field form.password class="form-control form-field" placeholder="Enter the password"%}
+    <button class="btn btn-primary login-btn" type="submit">
+        Log in
     </button>
-</form>
+</form> 
 {% endblock content %}
     

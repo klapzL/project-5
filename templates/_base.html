@@ -30,10 +30,10 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link active" aria-current="" href="{% url 'blog_list' %}">Blogs</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                        <a class="nav-link" href="{% url 'login_page' %}">Log in</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -47,6 +47,22 @@
                         </ul>
                     </li>
                 </ul>
+                {% if user.is_authenticated %}
+                    <div class="dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            {{user.username}}
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li>
+                                <a href="{% url 'logout_page' %}" class="dropdown-item">Log out</a></span>
+                            </li>
+                        </ul>
+                    </div>
+                {% else %}
+                    <span><a href="{% url 'login_page' %}" class="btn btn-primary user-ctrl-btn">Log in</a></span>
+                {% endif %}
                 <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
@@ -60,6 +76,7 @@
 
         {% endblock content %}
     </div>
+    <script src="{% static 'users/js/bootstrap.js' %}"></script>
 </body>
 
 </html>
