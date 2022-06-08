@@ -8,7 +8,7 @@ def blog_list(request):
     }
     return render(request, 'blogs/blog_list.html', context)
 
-@login_required
+@login_required(login_url='login_page')
 def blog_create(request):
     # if request.METHOD == 'POST':
 

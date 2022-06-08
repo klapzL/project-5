@@ -33,7 +33,7 @@
                         <a class="nav-link active" aria-current="" href="{% url 'blog_list' %}">Blogs</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login_page' %}">Log in</a>
+                        <a class="nav-link" href="{% url 'blog_create' %}">Create a blog</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -61,6 +61,7 @@
                         </ul>
                     </div>
                 {% else %}
+                    <span><a href="{% url 'register_page' %}" class="btn btn-primary user-ctrl-btn">Sign in</a></span>
                     <span><a href="{% url 'login_page' %}" class="btn btn-primary user-ctrl-btn">Log in</a></span>
                 {% endif %}
                 <form class="d-flex" role="search">

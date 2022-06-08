@@ -11,6 +11,9 @@
     background-color:   #eaeaea  ;
     border: solid  #eaeaea  2px;
 }
-.login-btn {
+.user-btn {
     margin-top: 10px;
+}
+.user-form {
+    width: 15em;
 }

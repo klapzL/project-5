@@ -3,10 +3,26 @@
 
 
 
-{% block title %}Registrtion{% endblock title %}
-    
+{% block title %}Registration{% endblock title %}
+
 
 {% block content %}
-    
-{% endblock content %}
-    
+<h2>Sign In</h2>
+<form class="user-form" action="" method="POST">
+    {% csrf_token %}
+    {% if form.errors %}
+        <p>
+            {{form.errors}}
+        </p>
+    {% endif %}
+    <label class="form-label">Username</label>
+    {% render_field form.username class="form-control form-field" placeholder="Enter an username"%}
+    <label class="form-label">E-mail</label>
+    {% render_field form.email class="form-control form-field" placeholder="Enter an e-mail"%}
+    <label class="form-label">Password</label>
+    {% render_field form.password1 class="form-control form-field" placeholder="Enter a password"%}
+    <label class="form-label">Password confirmation</label>
+    {% render_field form.password2 class="form-control form-field" placeholder="Enter the password again"%}
+    <button class="btn btn-primary user-btn" type="submit">Sign in</button>
+    {% endblock content %}
+</form>

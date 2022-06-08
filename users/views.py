@@ -1,11 +1,19 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.admin.forms import AuthenticationForm
+from .forms import RegistrationForm
+
 
 # Create your views here.
 def register_page(request):
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('blog_list')
+    form = RegistrationForm()
     context = {
-
+        'form': form
     }
     return render(request, 'users/register.html', context)
 
@@ -22,9 +30,7 @@ def login_page(request):
                 login(request, user)
                 return redirect('blog_list')
     form = AuthenticationForm()
-    context = {
-        'form': form
-    }
+    context = {'form': form}
     return render(request, 'users/login.html', context)
 
 
