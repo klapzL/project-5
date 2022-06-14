@@ -4,7 +4,19 @@
 
 
 {% block content %}
+<ol>
+    {% for b in blogs %}
+    <li>
+        {{b.title}}
+    </li>
+    {% endfor %}
+</ol>
+<form method="GET" action="">  
+    <input value="{{ordering}}" name="ordering" type="hidden" class="btn-check" id="btn-check" autocomplete="off">
+    <button type="submit" class="btn btn-primary">Order</button>
+</form>
 
+    
 {% endblock content %}
     
     

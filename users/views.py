@@ -48,7 +48,8 @@ def logout_page(request):
 
 
 def profile_page(request, profile_id):
-    profile = get_object_or_404(Profile, id=profile_id)
+    profile = get_object_or_404(Profile, id=profile_id
+    )
     context = {
         'profile': profile
     }
