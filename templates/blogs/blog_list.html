@@ -4,17 +4,32 @@
 
 
 {% block content %}
+<div class="blog-search">
+    <form action="" method="GET">
+        <label>Блог</label>
+        <input type="text" name="q" class="form-control" placeholder="Название" value="{{q}}">
+        <label>Создатель</label>
+        <input type="text" name="q_user" class="form-control" placeholder="Имя" value="{{q_user}}">
+        <button class="btn btn-primary" type="submit">Поиск</button>
+    </form>
+</div>
 <ol>
     {% for b in blogs %}
     <li>
         {{b.title}}
+        <p>
+            {{b.created_at}}
+        </p>
     </li>
     {% endfor %}
 </ol>
-<form method="GET" action="">  
+<a href="?ordering={{ordering}}">Toggle ordering</a>
+<!-- <form method="GET" action="">  
     <input value="{{ordering}}" name="ordering" type="hidden" class="btn-check" id="btn-check" autocomplete="off">
     <button type="submit" class="btn btn-primary">Order</button>
-</form>
+</form> -->
+
+
 
     
 {% endblock content %}
