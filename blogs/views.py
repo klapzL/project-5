@@ -2,6 +2,9 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from .models import Blog
 from django.db.models import Q
+from django.core.paginator import Paginator
+
+BLOGS_PER_PAGE = 5
 
 
 # Create your views here.
@@ -34,3 +37,22 @@ def blog_create(request):
 
     }
     return render (request, 'blogs/blog_create.html', context)
+
+
+def blog_list_pagination(request):
+    blogs = Blog.objects.all()
+    page_number = request.GET.get('page')
+    paginator = Paginator(blogs, BLOGS_PER_PAGE)
+    page = paginator.get_page(page_number)
+    ordering = request.GET.get('ordering', '-id')
+    if ordering == 'id':
+        blogs = blogs.order_by('id')
+        ordering = '-id'
+    else:
+        blogs = blogs.order_by('-id')
+        ordering = 'id'
+    context = {
+        'blogs': page,
+        'ordering': ordering,
+    }
+    return render(request, 'blogs/blog_list_p.html', context)
