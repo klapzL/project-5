@@ -6,3 +6,7 @@
 .blog-search {
     margin-bottom: 20px;
 }
+
+.pagination-div {
+    display: flex;
+}
