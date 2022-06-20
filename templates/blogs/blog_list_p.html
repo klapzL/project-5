@@ -7,7 +7,7 @@
 <h1>Блоги</h1>
 <ul class="list-group list-group-flush">
     {% for b in blogs %}
-    <li class="list-group-item">{{b.title}}</li>
+        <li class="list-group-item">{{b.title}}</li>
     {% endfor %}
 </ul>
 <a class="btn btn-primary" href="?ordering={{ordering}}&page={{blogs.number}}">Toggle ordering</a>
