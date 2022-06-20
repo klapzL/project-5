@@ -44,9 +44,3 @@ def blog_create(request):
 
     }
     return render(request, 'blogs/blog_create.html', context)
-
-
-def delete_blog(request):
-    for i in range(197, 243):
-        blog = Blog.objects.get(id=i).delete()
-    return redirect('list_p')

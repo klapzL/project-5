@@ -21,7 +21,7 @@
 </ul>
 <a class="btn btn-primary" href="?ordering={{ordering}}&page={{blogs.number}}&q={{q}}&q_user={{q_user}}">Toggle ordering</a>
 <!--<a class="btn btn-primary" href="delete/">Delete</a>-->
-<nav aria-label="Page navigation example">
+<div class="pagination">
     <ul class="pagination justify-content-center">
         <li class="page-item">
             {% if blogs.has_previous %}
@@ -50,5 +50,5 @@
             {% endif %}
         </li>
     </ul>
-</nav>
+</div>
 {% endblock content %}
