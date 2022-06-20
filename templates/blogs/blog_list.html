@@ -4,6 +4,7 @@
 
 
 {% block content %}
+<h1>Блоги</h1>
 <div class="blog-search">
     <form action="" method="GET">
         <label>Блог</label>
@@ -13,25 +14,41 @@
         <button class="btn btn-primary" type="submit">Поиск</button>
     </form>
 </div>
-<ol>
+<ul class="list-group list-group-flush">
     {% for b in blogs %}
-    <li>
-        {{b.title}}
-        <p>
-            {{b.created_at}}
-        </p>
-    </li>
+        <li class="list-group-item">{{b.title}}</li>
     {% endfor %}
-</ol>
-<a href="?ordering={{ordering}}">Toggle ordering</a>
-<!-- <form method="GET" action="">  
-    <input value="{{ordering}}" name="ordering" type="hidden" class="btn-check" id="btn-check" autocomplete="off">
-    <button type="submit" class="btn btn-primary">Order</button>
-</form> -->
-
-
-
-    
+</ul>
+<a class="btn btn-primary" href="?ordering={{ordering}}&page={{blogs.number}}&q={{q}}&q_user={{q_user}}">Toggle ordering</a>
+<!--<a class="btn btn-primary" href="delete/">Delete</a>-->
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        <li class="page-item">
+            {% if blogs.has_previous %}
+            <a href="?page={{blogs.previous_page_number}}&ordering={{ordering}}&q={{q}}&q_user={{q_user}}" class="page-link"><span
+                    aria-hidden="true">&laquo;</span></a>
+            {% else %}
+            <a class="page-link disabled"><span aria-hidden="true">&laquo;</span></a>
+            {% endif %}
+        </li>
+        <li class="page-item">
+            {% for i in blogs.paginator.page_range %}
+            {% if blogs.number == i %}
+            <a href="#" class="page-link">{{i}}</a>
+            {% else %}
+            <a href="?page={{i}}&ordering={{ordering}}&q={{q}}&q_user={{q_user}}" class="page-link">{{i}}</a>
+            {% endif %}
+            {% endfor %}
+        </li>
+        <li class="page-item">
+            {% if blogs.has_next %}
+            <a class="page-link" href="?page={{blogs.next_page_number}}&ordering={{ordering}}&q={{q}}&q_user={{q_user}}"><span aria-hidden="true">&raquo;</span>
+            </a>
+            {% else %}
+            <a class="page-link"><span aria-hidden="true">&raquo;</span>
+            </a>
+            {% endif %}
+        </li>
+    </ul>
+</nav>
 {% endblock content %}
-    
-    
