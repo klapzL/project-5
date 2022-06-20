@@ -50,7 +50,7 @@ def blog_list_pagination(request):
         blogs = blogs.order_by('id')
         paginator = Paginator(blogs, BLOGS_PER_PAGE)
         ordering = '-id'
-    else:
+    elif ordering == '-id':
         blogs = blogs.order_by('-id')
         paginator = Paginator(blogs, BLOGS_PER_PAGE)
         ordering = 'id'
