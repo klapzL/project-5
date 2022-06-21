@@ -11,44 +11,51 @@
         <input type="text" name="q" class="form-control" placeholder="Название" value="{{q}}">
         <label>Создатель</label>
         <input type="text" name="q_user" class="form-control" placeholder="Имя" value="{{q_user}}">
-        <button class="btn btn-primary" type="submit">Поиск</button>
+        <button class="btn btn-primary btn-submit" type="submit">Поиск</button>
     </form>
 </div>
 <ul class="list-group list-group-flush">
     {% for b in blogs %}
-        <li class="list-group-item">{{b.title}}</li>
+    <li class="list-group-item">{{b.title}} {{b.get_category_display}}</li>
     {% endfor %}
 </ul>
-<a class="btn btn-primary" href="?ordering={{ordering}}&page={{blogs.number}}&q={{q}}&q_user={{q_user}}">Toggle ordering</a>
-<!--<a class="btn btn-primary" href="delete/">Delete</a>-->
-<div class="pagination">
-    <ul class="pagination justify-content-center">
+<a class="btn btn-primary" href="?ordering={{ordering}}&page={{blogs.number}}&q={{q}}&q_user={{q_user}}">Сортировка</a>
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        {% if blogs.has_previous %}
         <li class="page-item">
-            {% if blogs.has_previous %}
-            <a href="?page={{blogs.previous_page_number}}&ordering={{ordering}}&q={{q}}&q_user={{q_user}}" class="page-link"><span
-                    aria-hidden="true">&laquo;</span></a>
-            {% else %}
-            <a class="page-link disabled"><span aria-hidden="true">&laquo;</span></a>
-            {% endif %}
+            <a href="?page={{blogs.previous_page_number}}&ordering={{ordering}}&q={{q}}&q_user={{q_user}}"
+                class="page-link"><span aria-hidden="true">&laquo;</span></a>
         </li>
-        <li class="page-item">
-            {% for i in blogs.paginator.page_range %}
+        {% else %}
+            <li class="page-item disabled">
+                <a class="page-link disabled"><span aria-hidden="true">&laquo;</span></a>
+            </li>
+        {% endif %}
+
+        {% for i in blogs.paginator.page_range %}
             {% if blogs.number == i %}
-            <a href="#" class="page-link">{{i}}</a>
+                <li class="page-item active">
+                    <a href="#" class="page-link">{{i}}</a>
+                </li>
             {% else %}
-            <a href="?page={{i}}&ordering={{ordering}}&q={{q}}&q_user={{q_user}}" class="page-link">{{i}}</a>
+            <li class="page-item">
+                <a href="?page={{i}}&ordering={{ordering}}&q={{q}}&q_user={{q_user}}" class="page-link">{{i}}</a>
+            </li>
             {% endif %}
-            {% endfor %}
-        </li>
-        <li class="page-item">
-            {% if blogs.has_next %}
-            <a class="page-link" href="?page={{blogs.next_page_number}}&ordering={{ordering}}&q={{q}}&q_user={{q_user}}"><span aria-hidden="true">&raquo;</span>
-            </a>
-            {% else %}
-            <a class="page-link"><span aria-hidden="true">&raquo;</span>
-            </a>
-            {% endif %}
-        </li>
+        {% endfor %}
+
+        {% if blogs.has_next %}
+            <li class="page-item">
+                <a class="page-link"
+                href="?page={{blogs.next_page_number}}&ordering={{ordering}}&q={{q}}&q_user={{q_user}}"><span
+                aria-hidden="true">&raquo;</span></a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <a class="page-link"><span aria-hidden="true">&raquo;</span></a>
+            </li>
+        {% endif %}
     </ul>
-</div>
+</nav>
 {% endblock content %}

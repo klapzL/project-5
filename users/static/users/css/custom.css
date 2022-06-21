@@ -18,5 +18,21 @@
     width: 15em;
 }
 .blog-search {
+    /* width: 30em; */
     margin-bottom: 20px;
+    display: flex;
+
+}
+.btn-submit {
+    margin-top: 10px;
+}
+div .pagination {
+    margin-top: 10px;
+
+}
+.page-items {
+    display: flex;
+}
+.list-group {
+    width: 30em;
 }
