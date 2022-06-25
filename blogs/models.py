@@ -26,3 +26,9 @@ class Blog(models.Model):
         verbose_name_plural = 'Blogs'
 
 
+class Tag(models.Model):
+    name = models.CharField(max_length=30)
+    blogs = models.ManyToManyField(Blog, verbose_name='Blogs', related_name='tags')
+
+    def __str__(self):
+        return self.name
