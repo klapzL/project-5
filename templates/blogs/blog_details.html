@@ -1,0 +1,21 @@
+{% extends '_base.html' %}
+
+{% load static %}
+
+
+{% block title %}{% endblock title %}
+
+
+{% block content %}
+<h2>{{blog.title}}</h2>
+<div class="tags">
+    {% for tag in blog.tags.all %}
+        <button class="btn btn-primary">{{tag}}</button>
+    {% endfor %}
+</div>
+<div class="blog-text">
+    {{blog.text}}
+</div>
+{% endblock content %}
+    
+    

@@ -3,6 +3,13 @@ from django.contrib.auth.models import User
 
 
 # Create your models here.
+class Tag(models.Model):
+    name = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.name
+
+
 class Blog(models.Model):
     CATEGORIES_CHOICES = (
         ('T', 'Текстовый блог'),
@@ -16,19 +23,12 @@ class Blog(models.Model):
     created_at = models.DateTimeField(auto_now=True)
     uploaded_at = models.DateField(auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.title
+    tags = models.ManyToManyField(Tag, verbose_name='Tags', related_name='blogs')
 
     class Meta:
         ordering = ['id']
         verbose_name = 'Blog'
         verbose_name_plural = 'Blogs'
 
-
-class Tag(models.Model):
-    name = models.CharField(max_length=30)
-    blogs = models.ManyToManyField(Blog, verbose_name='Blogs', related_name='tags')
-
     def __str__(self):
-        return self.name
+        return self.title

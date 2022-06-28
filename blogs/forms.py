@@ -7,6 +7,7 @@ class BlogForm(forms.ModelForm):
     # author = forms.models.ModelChoiceField(queryset=User.objects.all())
 
     class Meta:
-        field = (
-            'title', 'text', 'category', 'author',
+        model = Blog
+        fields = (
+            'title', 'text', 'category', 'author', 'tags'
         )

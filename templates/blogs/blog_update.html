@@ -2,12 +2,12 @@
 
 
 {% block title %}
-    Создать блог
+    Изменить блог
 {% endblock title %}
 
 
 {% block content %}
-    <h2>Создание блога</h2>
+    <h2>Изменение блога</h2>
     <form action="" method="POST">
         {% csrf_token %}
         {{form.as_p}}

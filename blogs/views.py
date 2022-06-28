@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Blog
 from django.db.models import Q
@@ -37,10 +37,20 @@ def blog_list(request):
     return render(request, 'blogs/blog_list.html', context)
 
 
+def blog_create(request):
+    form = BlogForm()
+    if request.method == 'POST':
+        form = BlogForm(request.POST or None, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('blog_list')
+    return render(request, 'blogs/blog_create.html', {'form': form})
+
+
 def blog_update(request, blog_id):
     blog = Blog.objects.get(id=blog_id)
-    form = BlogForm(request.POST or NONE, instance=blog)
-    if request.METHOD == 'POST':
+    form = BlogForm(request.POST or None, instance=blog)
+    if request.method == 'POST':
         if form.is_valid():
             form.save()
             return redirect('blog_list')
@@ -50,9 +60,14 @@ def blog_update(request, blog_id):
 @login_required(login_url='login_page')
 def blog_create(request):
     form = BlogForm
-    if request.METHOD == 'POST':
-        BlogForm(request.POST or NONE, files=request.FILES)
+    if request.method == 'POST':
+        BlogForm(request.POST or None, files=request.FILES)
         if form.is_valid():
             form.save()
             return redirect('blog_list')
     return render(request, 'blogs/blog_create.html', {'form': form})
+
+
+def blog_details(request, blog_id):
+    blog = get_object_or_404(Blog, id=blog_id)
+    return render(request, 'blogs/blog_details.html', {'blog': blog})
