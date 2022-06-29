@@ -2,7 +2,12 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-# Create your models here.
+CATEGORIES_CHOICES = (
+    ('T', 'Текстовый блог'),
+    ('P', 'Фотоблог'),
+    ('A', 'Артблог'),
+    ('M', 'Музыкальный блог'),
+)
 class Tag(models.Model):
     name = models.CharField(max_length=30)
 
@@ -11,12 +16,6 @@ class Tag(models.Model):
 
 
 class Blog(models.Model):
-    CATEGORIES_CHOICES = (
-        ('T', 'Текстовый блог'),
-        ('P', 'Фотоблог'),
-        ('A', 'Артблог'),
-        ('M', 'Музыкальный блог'),
-    )
     title = models.CharField(max_length=100, null=False)
     text = models.TextField(null=True, blank=True)
     category = models.CharField(max_length=25, choices=CATEGORIES_CHOICES, default="Haven't choosen")

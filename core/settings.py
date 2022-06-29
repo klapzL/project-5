@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'users',
     'blogs',
     'widget_tweaks',
+    'django_filters',
 ]
 
 MIDDLEWARE = [

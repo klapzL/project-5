@@ -4,6 +4,7 @@ from .models import Blog
 from django.db.models import Q
 from django.core.paginator import Paginator
 from .forms import BlogForm
+from .filters import BlogFilter
 
 BLOGS_PER_PAGE = 6
 
@@ -29,11 +30,7 @@ def blog_list(request):
         paginator = Paginator(blogs, BLOGS_PER_PAGE)
         ordering = 'id'
     page = paginator.get_page(page_number)
-    context = {
-        'blogs': page, 
-        'ordering': ordering, 
-        'q': q, 
-        'q_user': q_user}
+    context = {'blogs': page, 'ordering': ordering, 'q': q, 'q_user': q_user}
     return render(request, 'blogs/blog_list.html', context)
 
 
@@ -68,6 +65,25 @@ def blog_create(request):
     return render(request, 'blogs/blog_create.html', {'form': form})
 
 
+@login_required(login_url='login_page')
+def blog_delete(request, blog_id):
+    blog = get_object_or_404(Blog, id=blog_id)
+    if request.method == 'POST':
+        blog.delete()
+        return redirect('blog_list')
+    return render(request, 'blogs/blog_delete.html', {
+        'blog': blog,
+    })
+
+
 def blog_details(request, blog_id):
     blog = get_object_or_404(Blog, id=blog_id)
     return render(request, 'blogs/blog_details.html', {'blog': blog})
+
+
+def blog_list_f(request):
+    f = BlogFilter(request.GET, queryset=Blog.objects.all())
+    context = {
+        'filter': f,
+    }
+    return render(request, 'blogs/blog_list_f.html', context)

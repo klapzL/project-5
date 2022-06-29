@@ -1,0 +1,28 @@
+{% extends '_base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+
+{% block title %}Blog list{% endblock title %}
+
+
+{% block content %}
+<form action="">
+    <h2>Блоги</h1>
+    <label for="">По заголовку</label>
+    {% render_field filter.form.title__icontains %}
+    <label for="">По категории</label>
+    {% render_field filter.form.category %}
+    <button class="btn btn-primary" type="submit">Поиск</button>
+</form>
+<ul>
+    
+    {% for b in filter.qs %}
+    <li>
+        {{b.title}}
+    </li>
+    {% endfor %}
+        
+</ul>
+
+{% endblock content %}

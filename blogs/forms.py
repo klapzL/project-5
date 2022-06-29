@@ -1,5 +1,5 @@
 from django import forms
-from .models import Blog
+from .models import Blog, Tag
 from django.contrib.auth.models import User
 
 
@@ -10,4 +10,13 @@ class BlogForm(forms.ModelForm):
         model = Blog
         fields = (
             'title', 'text', 'category', 'author', 'tags'
+        )
+
+
+class TagForm(forms.ModelForm):
+
+    class Meta:
+        model = Tag
+        fields = (
+            'name',
         )
