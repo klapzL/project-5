@@ -1,3 +1,4 @@
+from distutils.command.upload import upload
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -31,3 +32,8 @@ class Blog(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Photo(models.Model):
+    photo = models.ImageField(upload_to='blogs_photos')
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE, null=True)

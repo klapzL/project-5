@@ -1,0 +1,34 @@
+{% extends '_base.html' %}
+{% load static %}
+
+
+{% block title %}Blog list{% endblock title %}
+
+
+{% block content %}
+<ul id="blog-list">
+    {% for b in blogs %}
+    <li>
+        {{b.title}}
+    </li>
+    {% endfor %}
+</ul>
+<div id="pagination" hx-swap-oob="true">
+    <!-- {% if blogs.has_next %}
+    <button hx-get="?page={{blogs.next_page_number}}" hx-target="#blog-list">
+        Следующая страница
+    </button>
+    {% endif %}
+    {% if blogs.has_previous %}
+    <button hx-get="?page={{blogs.previous_page_number}}" hx-target="#blog-list">
+        Предыдущая страница
+    </button>
+    {% endif %} -->
+    {% if blogs.has_next %}
+        <button class="btn btn-primary"
+        hx-get="?page={{blogs.next_page_number}}"
+        hx-target="#blog-list"
+        hx-swap="beforeend">Больше..</button>
+    {% endif %}
+</div>
+{% endblock %}

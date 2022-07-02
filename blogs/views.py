@@ -1,12 +1,13 @@
 from django.shortcuts import get_object_or_404, render, redirect
+from django.forms import modelformset_factory
 from django.contrib.auth.decorators import login_required
-from .models import Blog
+from .models import Blog, Photo
 from django.db.models import Q
 from django.core.paginator import Paginator
-from .forms import BlogForm
+from .forms import BlogForm, PhotoForm
 from .filters import BlogFilter
 
-BLOGS_PER_PAGE = 6
+BLOGS_PER_PAGE = 5
 
 
 # Create your views here.
@@ -56,13 +57,26 @@ def blog_update(request, blog_id):
 
 @login_required(login_url='login_page')
 def blog_create(request):
-    form = BlogForm
+    blog_form = BlogForm
+    PhotoFormSet = modelformset_factory(Photo, form=PhotoForm, extra=3)
     if request.method == 'POST':
-        BlogForm(request.POST or None, files=request.FILES)
-        if form.is_valid():
+        blog_form = BlogForm(request.POST or None, files=request.FILES)
+        formset = PhotoFormSet(request.POST,
+                               request.FILES,
+                               queryset=Photo.objects.none())
+        if blog_form.is_valid() and formset.is_valid():
+            blog_form = BlogForm.save(commit=False)
+            form.user = request.user
             form.save()
+
+            for form in formset.cleaned_data:
+                if form:
+                    photo = Photo(blog=form, photo=form)
             return redirect('blog_list')
-    return render(request, 'blogs/blog_create.html', {'form': form})
+    return render(request, 'blogs/blog_create.html', {
+        'blog_form': form,
+        'formset': formset
+    })
 
 
 @login_required(login_url='login_page')
@@ -87,3 +101,17 @@ def blog_list_f(request):
         'filter': f,
     }
     return render(request, 'blogs/blog_list_f.html', context)
+
+
+def blog_list_a(request):
+    blogs = Blog.objects.all()
+    page_num = request.GET.get('page')
+    paginator = Paginator(blogs, BLOGS_PER_PAGE)
+    blogs = paginator.get_page(page_num)
+    context = {
+        'blogs': blogs,
+    }
+    if page_num == 1 or page_num is None:
+        return render(request, 'blogs/blog_list_a.html', context)
+    return render(request, 'blogs/_blog_list_ajax.html', context)
+        
