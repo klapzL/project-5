@@ -8,6 +8,7 @@
 
 {% block content %}
 <h2>{{blog.title}}</h2>
+<img src="{{blog.photos.first.photo.url}}">
 <div class="tags">
     {% for tag in blog.tags.all %}
         <button class="btn btn-primary">{{tag}}</button>
